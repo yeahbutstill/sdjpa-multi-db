@@ -18,12 +18,26 @@ public class CreditCardServiceImpl implements CreditCardService {
     private final CreditCardRepository creditCardRepository;
     private final CreditCardPANRepository creditCardPANRepository;
 
-
+    @Transactional
     @Override
     public CreditCard getCreditCardById(Long id) {
-        //todo impl
 
-        return null;
+        CreditCard creditCard = creditCardRepository.findById(id).orElseThrow(() -> new RuntimeException("Credit card not found"));
+
+        CreditCardHolder creditCardHolder = creditCardHolderRepository
+                .findByCreditCardId(creditCard.getId()).orElseThrow(() -> new RuntimeException("Credit card holder not found"));
+
+        CreditCardPAN creditCardPAN = creditCardPANRepository
+                .findByCreditCardId(creditCard.getId()).orElseThrow(() -> new RuntimeException("Credit card PAN not found"));
+
+        creditCard.setFirstName(creditCardHolder.getFirstName());
+        creditCard.setLateName(creditCardHolder.getLastName());
+        creditCard.setZipCode(creditCard.getZipCode());
+        creditCard.setCreditCardNumber(creditCardPAN.getCreditCardNumber());
+        creditCard.setExpirationDate(creditCard.getExpirationDate());
+        creditCard.setCvv(creditCard.getCvv());
+
+        return creditCard;
     }
 
     @Transactional

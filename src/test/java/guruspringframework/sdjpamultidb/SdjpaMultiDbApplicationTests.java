@@ -2,6 +2,7 @@ package guruspringframework.sdjpamultidb;
 
 import guruspringframework.sdjpamultidb.domain.creditcard.CreditCard;
 import guruspringframework.sdjpamultidb.services.CreditCardService;
+import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,12 @@ class SdjpaMultiDbApplicationTests {
         Assertions.assertNotNull(savedCC);
         Assertions.assertNotNull(savedCC.getId());
         Assertions.assertNotNull(savedCC.getCreditCardNumber());
+
+        CreditCard fetchedCreditCard = creditCardService.getCreditCardById(savedCC.getId());
+
+        Assertions.assertNotNull(fetchedCreditCard);
+        Assertions.assertNotNull(fetchedCreditCard.getId());
+        Assertions.assertNotNull(fetchedCreditCard.getCreditCardNumber());
     }
 
     @Test
