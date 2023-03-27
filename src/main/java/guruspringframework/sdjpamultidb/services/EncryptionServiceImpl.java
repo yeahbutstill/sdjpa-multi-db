@@ -5,9 +5,7 @@ import org.springframework.stereotype.Service;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-/**
- * Created by jt on 6/28/22.
- */
+
 @Service
 public class EncryptionServiceImpl implements EncryptionService {
     @Override
